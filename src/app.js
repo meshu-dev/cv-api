@@ -1,13 +1,16 @@
 require("dotenv").config();
+
 const fastify = require("fastify");
 
-const { routes } = require("./routes.js");
+const indexRoutes = require("./routes/index.js");
+const cvRoutes = require("./routes/cv.js");
 
 const build = (opts = {}) => {
   const app = fastify(opts);
   
-  app.register(routes);
-  
+  app.register(indexRoutes);
+  app.register(cvRoutes, { prefix: '/cv' });
+
   return app;
 };
 
