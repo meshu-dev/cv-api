@@ -1,21 +1,11 @@
-const { getObject, putObject } = require("../services/s3Service.js");
-const { sendResponse, getS3Bucket, getS3Key } = require("../utils/common.js");
+const { getCv } = require("../services/cvService.js");
+const { sendResponse } = require("../utils/common.js");
 
-const s3Bucket = getS3Bucket();
-const s3Key = getS3Key();
+const getCvRequest = async (request, reply) => {
+  const row = await getCv();
 
-const getCV = async (request, reply) => {
-  let statusCode = 500;
-  let response = { success: false };
-
-  const result = await getObject(s3Bucket, s3Key);
-
-  const bodyStream = result.Body;
-  response = await bodyStream.transformToString();
-
-  if (response) {
-    statusCode = 200;
-  }
+  const statusCode = 200;
+  const response = row;
 
   sendResponse(reply, statusCode, response);
 };
@@ -42,4 +32,4 @@ const setCV = async (request, reply) => {
   sendResponse(reply, statusCode, response);
 };
 
-module.exports = { getCV, setCV };
+module.exports = { getCvRequest, setCV };

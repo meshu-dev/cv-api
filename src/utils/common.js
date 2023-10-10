@@ -4,16 +4,21 @@ const sendResponse = (reply, statusCode, response) => {
        .send(response);
 };
 
-const getS3Bucket = () => {
-  return process.env.AWS_S3_BUCKET;
-};
+const getErrorResponse = (error) => {
+  if (error.response) {
+    const statusCode = error.response.status;
+    const data = error.response.data;
 
-const getS3Key = () => {
-  return process.env.AWS_S3_KEY;
+    return {
+      error: {
+        code: statusCode,
+        message: data['error']
+      }
+    };
+  }
+  return { error: true };
 };
 
 module.exports = {
-  sendResponse,
-  getS3Bucket,
-  getS3Key
+  sendResponse
 };

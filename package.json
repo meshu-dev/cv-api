@@ -3,8 +3,8 @@
     "dev": "node src/server.js"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.252.0",
     "dotenv": "^16.0.3",
-    "fastify": "^4.11.0"
+    "fastify": "^4.11.0",
+    "mongoose": "^7.5.2"
   }
 }
